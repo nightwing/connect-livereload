@@ -20,6 +20,7 @@ module.exports = function livereload(opt) {
     }];
   var disableCompression = opt.disableCompression || false;
   var port = opt.port || 35729;
+  var hostname = opt.hostname == "0.0.0.0" ? "" : opt.hostname;
   var plugins = opt.plugins || [];
 
   function snippet(host) {
@@ -91,7 +92,7 @@ module.exports = function livereload(opt) {
 
   // middleware
   return function livereload(req, res, next) {
-    var host = opt.hostname || req.headers.host.split(':')[0];
+    var host = hostname || req.headers.host.split(':')[0];
 
     if (res._livereload) return next();
     res._livereload = true;
